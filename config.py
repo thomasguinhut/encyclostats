@@ -11,8 +11,8 @@ MAX_PDF_SIZE_MB = 20          # on ignore les PDFs trop lourds
 MAX_TEXT_CHARS = 4000         # taille maximale du texte envoyé au LLM
 
 # --- LLM ---
-LLM_MODEL_NAME = "mistralai/Mistral-7B-v0.1"
-LLM_MAX_NEW_TOKENS = 200
+LLM_MODEL_NAME = "mistralai/Mistral-7B-Instruct-v0.3"
+LLM_MAX_NEW_TOKENS = 1000        # ~600 mots ≈ 900 tokens
 LLM_TEMPERATURE = 0.2
 LLM_DEVICE = 0                # GPU index (0 = premier GPU)
 

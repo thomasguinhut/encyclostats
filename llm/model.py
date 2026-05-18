@@ -1,5 +1,5 @@
 """
-Singleton pour le pipeline Mistral-7B-v0.1.
+Singleton pour le pipeline HuggingFace (modèle instruct).
 Le modèle est chargé une seule fois au premier appel de get_pipeline().
 """
 import logging
@@ -22,8 +22,7 @@ def get_pipeline() -> Pipeline:
             "text-generation",
             model=LLM_MODEL_NAME,
             device=LLM_DEVICE,
-            # Chargement en demi-précision pour tenir sur un GPU de 16 Go
-            torch_dtype="auto",
+            dtype="auto",            # float16 automatique sur GPU
             trust_remote_code=False,
         )
         logger.info("Modèle chargé.")
@@ -31,14 +30,17 @@ def get_pipeline() -> Pipeline:
 
 
 def generer_texte(prompt: str, max_new_tokens: int, temperature: float) -> str:
-    """Envoie un prompt au pipeline et retourne uniquement le texte généré."""
     pipe = get_pipeline()
+
+    # Les modèles instruct utilisent le format chat (apply_chat_template)
+    messages = [{"role": "user", "content": prompt}]
+
     resultat = pipe(
-        prompt,
+        messages,
         max_new_tokens=max_new_tokens,
         temperature=temperature,
         do_sample=temperature > 0,
-        return_full_text=False,   # on ne veut que la complétion, pas le prompt répété
+        return_full_text=False,
         pad_token_id=pipe.tokenizer.eos_token_id,
     )
     return resultat[0]["generated_text"].strip()

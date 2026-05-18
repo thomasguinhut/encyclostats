@@ -34,14 +34,14 @@ def traiter_url(url: str) -> None:
         if texte_pdf:
             texte_complet += "\n\n" + texte_pdf
 
-        logger.info("Génération des mots-clés…")
-        mots_cles = analyser_url(titre, texte_complet)
+        logger.info("Génération du résumé…")
+        resume = analyser_url(titre, texte_complet)
 
         print(f"\n{'='*60}")
-        print(f"URL    : {url}")
-        print(f"Titre  : {titre}")
-        print(f"PDFs   : {', '.join(urls_pdf_traitees) or '—'}")
-        print(f"Mots-clés ({len(mots_cles.split(','))}) :\n  {mots_cles}")
+        print(f"URL   : {url}")
+        print(f"Titre : {titre}")
+        print(f"PDFs  : {', '.join(urls_pdf_traitees) or '—'}")
+        print(f"\nRésumé :\n{resume}")
         print(f"{'='*60}\n")
 
     except Exception as exc:
