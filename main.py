@@ -48,6 +48,20 @@ def traiter_url(url: str) -> None:
         logger.error("Échec pour %s — %s: %s", url, type(exc).__name__, exc)
 
 
+def mode_interactif() -> None:
+    get_pipeline()
+    print("Modèle chargé. Entrez une URL par ligne (q pour quitter).\n")
+    while True:
+        try:
+            url = input("URL > ").strip()
+        except (EOFError, KeyboardInterrupt):
+            print("\nArrêt.")
+            break
+        if url.lower() in ("q", "quit", "exit", ""):
+            break
+        traiter_url(url)
+
+
 def main(urls: list[str]) -> None:
     get_pipeline()
     for url in urls:
@@ -55,6 +69,7 @@ def main(urls: list[str]) -> None:
 
 
 if __name__ == "__main__":
-    # Possibilité de passer des URLs en arguments, sinon on utilise la liste de test
-    urls = sys.argv[1:] if len(sys.argv) > 1 else URLS_TEST
-    main(urls)
+    if len(sys.argv) > 1:
+        main(sys.argv[1:])
+    else:
+        mode_interactif()
