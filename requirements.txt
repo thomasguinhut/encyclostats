@@ -1,0 +1,16 @@
+# Scraping
+requests>=2.31.0
+beautifulsoup4>=4.12.0
+lxml>=4.9.0          # parser HTML rapide pour BeautifulSoup
+
+# Extraction PDF
+pdfplumber>=0.10.3
+
+# LLM local
+transformers>=4.40.0
+torch>=2.2.0          # GPU CUDA — sur SSP Cloud, torch+CUDA est préinstallé
+accelerate>=0.29.0    # nécessaire pour device_map et chargement efficace
+sentencepiece>=0.1.99 # tokenizer Mistral
+
+# Utilitaires
+tqdm>=4.66.0          # barres de progression optionnelles
